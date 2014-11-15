@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block styles %}
+    {{ block.super }}
+    <link rel="stylesheet" href={% static "css/index.css" %} />
+{% endblock %}
+
+{% block navigation %}
+
+{% endblock %}
+
+{% block whole_body %}
+<div id="home-header">
+    <div class="wrapper">
+
+        <!-- BEGIN header title-->
+        <div class="home-header-image">
+            <img width="150" height="150" src={% static "images/team.jpg" %} alt="">
+        </div>
+        <div class="home-header-title">
+            <h1>sq team</h1>
+
+            <p class="tagline">Moto goes here</p>
+        </div>
+        <!-- END header title -->
+
+        <!-- BEGIN header links-->
+        <div class="home-header-links">
+
+            <a class="reg" href="/signup/">Sign up</a>
+
+            <div class="login-box">
+                <p>or <a class="login" href="/login/">Login</a></p>
+            </div>
+        </div>
+        <!-- END header links -->
+
+    </div>
+</div>
+
+<div id="content">
+    <div class="wrapper">
+
+        <div class="module">
+            <div class="module-wrapper">
+
+                <div class="module-header">
+                    <h3>What is this place?</h3>
+
+                    <p>Short bio about us and project desc
+                        <a href="#">Link to our site</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <h3>Start the project right now</h3>
+        <div class="wide-search-bar">
+            <div class="wide-search-bar-wrapper clearfix">
+
+                <form action="/search/" method="GET">
+                    <div class="text-input-wrapper">
+                        <input type="text" name="q" value="" id="id_site_search">
+                    </div>
+                    <div class="submit-input-wrapper">
+
+                        <input type="submit" value="Let's do this.">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="footer">
+    <hr class="uk-grid-divider">
+
+    <p>Designed with <i class="uk-icon-heart"></i> at <strong>sq team</strong></p>
+</div>
+{% endblock %}
