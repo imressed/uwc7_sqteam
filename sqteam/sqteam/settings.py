@@ -89,3 +89,7 @@ TEMPLATE_PATH = 'templates'
 TEMPLATE_DIRS = (
     TEMPLATE_PATH,
 )
+
+# Auth
+AUTH_USER_MODEL = 'sqapp.SqUser'
+LOGIN_URL = '/login'

@@ -1,0 +1,12 @@
+.uk-nav-parent-icon>.uk-parent>a:after {
+    content: "\f105";
+    width: 20px;
+    margin-right: -10px;
+    float: right;
+    font-family: FontAwesome;
+    text-align: center;
+}
+
+.uk-offcanvas-bar {
+    width: auto;
+}

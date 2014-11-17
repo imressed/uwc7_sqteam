@@ -1,0 +1,40 @@
+<div id="login-modal" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <a class="uk-modal-close uk-close"></a>
+
+        <h1>Login</h1>
+
+        <form class="uk-form" method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Enter to access all the power</legend>
+                <div class="uk-form-row">
+                    <div class="uk-form-icon">
+                        <i class="uk-icon-envelope"></i>
+                        <input type="text" name="username" placeholder="Enter your e-mail">
+                    </div>
+                </div>
+
+                <div class="uk-form-row">
+                    <div class="uk-form-icon">
+                        <i class="uk-icon-lock"></i>
+                        <input type="password" name="password" placeholder="Enter your secret">
+                    </div>
+                </div>
+
+                <div class="uk-form-row">
+                    <label><input type="checkbox"> Remember me</label>
+                </div>
+
+                <div class="uk-form-row">
+                    <button>Login</button>
+                </div>
+                {% if form.errors %}
+                    <p>Your username and password didn't match. Please try again.</p>
+                {% endif %}
+            </fieldset>
+
+        </form>
+
+    </div>
+</div>

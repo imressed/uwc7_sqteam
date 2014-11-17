@@ -9,6 +9,7 @@
 
         <script src={% static "js/jquery.js" %}></script>
         <script src={% static "js/uikit.min.js" %}></script>
+        <script src={% static "js/componentes/.js" %}></script>
         <link rel="icon"
               type="image/icon"
               href="/static/favicon.ico">
@@ -26,7 +27,7 @@
 
 <body>
 {% block whole_body %}
-    <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <div class="uk-container uk-container-center">
 
         {% block navigation %}
 {#            {% include "navigation.html" with menu_item=''%}#}

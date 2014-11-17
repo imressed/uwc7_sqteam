@@ -1,0 +1,41 @@
+<div id="signup-modal" class="uk-modal uk-open">
+    <div class="uk-modal-dialog">
+        <a href="" class="uk-modal-close uk-close"></a>
+
+        <h1>Signup</h1>
+
+        <form class="uk-form" method="post" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Legend</legend>
+
+                <div class="uk-form-row">
+                    <div class="uk-form-icon">
+                        <i class="uk-icon-envelope"></i>
+                        <input type="text" name="email" placeholder="Enter your e-mail">
+                    </div>
+                </div>
+
+                <div class="uk-form-row">
+                    <div class="uk-form-icon">
+                        <i class="uk-icon-lock"></i>
+                        <input type="password" name="password" placeholder="Enter your secret">
+                    </div>
+                </div>
+
+                <div class="uk-form-row">
+                    <select>
+                        <option>Yes, I do</option>
+                        <option>No, I don't</option>
+                    </select>
+                </div>
+
+                <div class="uk-form-row">
+                    <button>Register</button>
+                </div>
+
+            </fieldset>
+
+        </form>
+    </div>
+</div>

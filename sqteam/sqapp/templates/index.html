@@ -29,14 +29,19 @@
         <!-- BEGIN header links-->
         <div class="home-header-links">
 
-            <a class="reg" href="/signup/">Sign up</a>
+            <a class="reg" href="#signup-modal" data-uk-modal>Sign up</a>
 
             <div class="login-box">
-                <p>or <a class="login" href="/login/">Login</a></p>
+                <p>or <a class="login" href="#login-modal" data-uk-modal>Login</a></p>
             </div>
         </div>
         <!-- END header links -->
 
+
+        <!-- BEGIN modals-->
+            {% include "user/login_modal.html" %}
+            {% include "user/signup_modal.html" %}
+        <!-- END modals-->
     </div>
 </div>
 
