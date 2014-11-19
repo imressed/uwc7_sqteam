@@ -4,38 +4,83 @@
 
         <h1>Signup</h1>
 
-        <form class="uk-form" method="post" action="{% url 'signup' %}">
+        <form id="signup-form" class="uk-form" method="post" action="{% url 'signup' %}">
             {% csrf_token %}
             <fieldset>
-                <legend>Legend</legend>
+                <legend>Register a new user here</legend>
+                <div class="uk-grid">
+                    <div class="uk-width-1-2">
+                        <div class="uk-form-row">
+                            <div class="uk-form-icon">
+                                <i class="uk-icon-envelope"></i>
+                                <input type="text" name="email" placeholder="Enter your e-mail">
+                            </div>
+                        </div>
 
-                <div class="uk-form-row">
-                    <div class="uk-form-icon">
-                        <i class="uk-icon-envelope"></i>
-                        <input type="text" name="email" placeholder="Enter your e-mail">
+                        <div class="uk-form-row">
+                            <div class="uk-form-icon">
+                                <i class="uk-icon-lock"></i>
+                                <input type="password" name="password" placeholder="Enter your secret">
+                            </div>
+                        </div>
+
+{#                    <div class="uk-form-row">#}
+{#                        <select>#}
+{#                            <option>Yes, I do</option>#}
+{#                            <option>No, I don't</option>#}
+{#                        </select>#}
+{#                    </div>#}
+
+                        <div class="uk-form-row">
+                            <button id="signup-button">Register</button>
+                        </div>
+                    </div>
+                    <div class="uk-width-1-2">
+                        <div class="uk-alert uk-alert-danger form-errors" id="signup-errors"></div>
                     </div>
                 </div>
-
-                <div class="uk-form-row">
-                    <div class="uk-form-icon">
-                        <i class="uk-icon-lock"></i>
-                        <input type="password" name="password" placeholder="Enter your secret">
-                    </div>
-                </div>
-
-                <div class="uk-form-row">
-                    <select>
-                        <option>Yes, I do</option>
-                        <option>No, I don't</option>
-                    </select>
-                </div>
-
-                <div class="uk-form-row">
-                    <button>Register</button>
-                </div>
-
             </fieldset>
 
         </form>
     </div>
+
+        <script>
+        $(function(){
+            $("#signup-button").click(function(event) {
+                event.preventDefault();
+
+                var signup_form = $("#signup-form");
+                var csrftoken = $.cookie('csrftoken');
+                $.ajax({
+                    type: "POST",
+                    url: signup_form.attr("action"),
+                    data: {
+                        email: signup_form.find("input[name=email]").val(),
+                        password: signup_form.find("input[name=password]").val(),
+                        csrfmiddlewaretoken: csrftoken
+                    }
+                })
+                .done(function(msg) {
+                    console.log(msg)
+                    if(msg.success == true) {
+                        window.location = msg.next;
+                    } else {
+                        $("#signup-errors").empty().show();
+                        $.each(msg.errors, function(field, error) {
+                            if(field == "__all__") {
+                                $("#signup-errors").append(
+                                        $("<p>" + error + "</p>")
+                                );
+                            } else {
+                                $("#signup-errors").append(
+                                        $("<p>" + field + ": " + error + "</p>")
+                                );
+                            }
+                        });
+
+                    }
+                });
+            });
+        });
+    </script>
 </div>

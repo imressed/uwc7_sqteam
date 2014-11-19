@@ -4,37 +4,81 @@
 
         <h1>Login</h1>
 
-        <form class="uk-form" method="post" action="{% url 'login' %}">
+        <form id="login-form" class="uk-form" method="post" action="{% url 'login' %}">
             {% csrf_token %}
             <fieldset>
-                <legend>Enter to access all the power</legend>
-                <div class="uk-form-row">
-                    <div class="uk-form-icon">
-                        <i class="uk-icon-envelope"></i>
-                        <input type="text" name="username" placeholder="Enter your e-mail">
+            <legend>Enter to access all the power</legend>
+                <div class="uk-grid">
+                    <div class="uk-width-1-2">
+                        <div class="uk-form-row">
+                            <div class="uk-form-icon">
+                                <i class="uk-icon-envelope"></i>
+                                <input type="email" name="username" placeholder="Enter your e-mail">
+                            </div>
+                        </div>
+
+                        <div class="uk-form-row">
+                            <div class="uk-form-icon">
+                                <i class="uk-icon-lock"></i>
+                                <input type="password" name="password" placeholder="Enter your secret">
+                            </div>
+                        </div>
+
+                        <div class="uk-form-row">
+                            <label><input type="checkbox"> Remember me</label>
+                        </div>
+
+                        <div class="uk-form-row">
+                            <button id="login-button">Login</button>
+                        </div>
+                    </div>
+                    <div class="uk-width-1-2">
+                        <div class="uk-alert uk-alert-danger form-errors" id="login-errors"></div>
                     </div>
                 </div>
 
-                <div class="uk-form-row">
-                    <div class="uk-form-icon">
-                        <i class="uk-icon-lock"></i>
-                        <input type="password" name="password" placeholder="Enter your secret">
-                    </div>
-                </div>
-
-                <div class="uk-form-row">
-                    <label><input type="checkbox"> Remember me</label>
-                </div>
-
-                <div class="uk-form-row">
-                    <button>Login</button>
-                </div>
-                {% if form.errors %}
-                    <p>Your username and password didn't match. Please try again.</p>
-                {% endif %}
             </fieldset>
-
         </form>
-
     </div>
+
+    <script>
+        $(function(){
+            $("#login-button").click(function(event) {
+                event.preventDefault();
+
+                var login_form = $("#login-form");
+                var csrftoken = $.cookie('csrftoken');
+                $.ajax({
+                    type: "POST",
+                    url: login_form.attr("action"),
+                    data: {
+                        username: login_form.find("input[name=username]").val(),
+                        password: login_form.find("input[name=password]").val(),
+                        csrfmiddlewaretoken: csrftoken
+                    }
+                })
+                .done(function(msg) {
+                    console.log(msg)
+                    if(msg.success == true) {
+                        window.location = msg.next;
+                    } else {
+                        $("#login-errors").empty().show();
+                        $.each(msg.errors, function(field, error) {
+                            if(field == "__all__") {
+                                $("#login-errors").append(
+                                        $("<p>" + error + "</p>")
+                                );
+                            } else {
+                                $("#login-errors").append(
+                                        $("<p>" + field + ": " + error + "</p>")
+                                );
+                            }
+                        });
+
+                    }
+                });
+            });
+        });
+    </script>
 </div>
+

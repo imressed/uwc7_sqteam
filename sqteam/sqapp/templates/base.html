@@ -9,13 +9,15 @@
 
         <script src={% static "js/jquery.js" %}></script>
         <script src={% static "js/uikit.min.js" %}></script>
-        <script src={% static "js/componentes/.js" %}></script>
+        <script src={% static "js/components/notify.min.js" %}></script>
+        <script src={% static "js/jquery.cookie.js" %}></script>
         <link rel="icon"
               type="image/icon"
               href="/static/favicon.ico">
 
         {% block styles %}
             <link rel="stylesheet" href={% static "css/uikit.min.css" %} />
+            <link rel="stylesheet" href={% static "css/components/notify.min.css" %} />
 
         {% endblock %}
 
@@ -26,8 +28,21 @@
     </head>
 
 <body>
+{% block flash_messages %}
+
+    {% if messages %}
+        {% for message in messages %}
+        <script>$.UIkit.notify("{{ message }}", {"timeout": 0});</script>
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}
+
 {% block whole_body %}
+
     <div class="uk-container uk-container-center">
+
+
 
         {% block navigation %}
 {#            {% include "navigation.html" with menu_item=''%}#}

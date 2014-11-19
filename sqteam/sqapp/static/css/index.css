@@ -47,12 +47,14 @@ body {
     font-family: 'arian_amuregular';
     color: #444;
 }
+
 h1, h2, h3, h4, h5, h6 {
     color: #222;
     font-family: 'arian_amuregular';
     font-weight: bold;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 }
+
 h1 { font-size: 28px; line-height: 36px; margin-bottom: 40px; }
 h2 { font-size: 24px; line-height: 28px; margin-bottom: 10px; }
 h3 { font-size: 20px; line-height: 24px; margin-bottom: 10px; }
@@ -85,7 +87,7 @@ form p { color: #999; }
 form p label { font-weight: normal; }
 textarea, input, button, .button, select { display: block; padding: 5px; color: #444; background-color: #fff; border: 1px solid #BFBFBF; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
 textarea, input, .button { box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.5) inset; -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.5) inset; -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.5) inset; }
-input[type="text"], input[type="password"] { width: 250px; height: 20px; margin-bottom: 5px; background: #fff; }
+
 input::-webkit-input-placeholder { color: #ccc; }
 input:-moz-placeholder { color: #ccc; opacity: 1; }
 input::-moz-placeholder { color: #ccc; opacity: 1; }
@@ -115,9 +117,6 @@ label { display: block; margin-bottom: 4px; color: #444; }
 
 #content { padding-top: 50px; }
 #content ul { margin-bottom: 20px; }
-
-
-/* header */
 
 
 /* home */
@@ -257,4 +256,9 @@ label { display: block; margin-bottom: 4px; color: #444; }
 
 .uk-modal-dialog button {
     margin: 10px 0px;
+}
+
+.form-errors {
+    display: none;
+    font-size: small;
 }

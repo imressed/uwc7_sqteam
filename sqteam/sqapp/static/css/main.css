@@ -1,4 +1,11 @@
-.uk-nav-parent-icon>.uk-parent>a:after {
+@charset "utf-8";
+@import url("../fonts/arnamu.css");
+
+html, body, h1, h2, h3, h4, h5, h6 {
+    font-family: 'arian_amuregular'
+}
+
+.uk-nav-parent-icon > .uk-parent > a:after {
     content: "\f105";
     width: 20px;
     margin-right: -10px;
@@ -9,4 +16,74 @@
 
 .uk-offcanvas-bar {
     width: auto;
+}
+
+.header-bar {
+    height: 200px;
+
+    font-size: 22px;
+    background: url(../images/header-index-bg.png) top left repeat #465158;
+    border-bottom: 1px solid #333;
+    color: #fff;
+}
+
+.header-nav {
+    font-family: 'arian_amuregular';
+    font-weight: bold;
+    padding-top: 60px;
+}
+
+.header-bar a, .header-bar ul > li > a {
+    font-family: 'arian_amuregular';
+    font-weight: bold;
+    color: #fff;
+    font-size: large;
+}
+
+.header-bar a:hover, .header-bar ul > li > a:hover {
+    color: #8ECC4C;
+    cursor: pointer;
+    background-color: inherit;
+}
+
+.header-bar ul > li > a:hover {
+    text-decoration: underline;
+}
+
+body {
+    font-family: 'arian_amuregular';
+    font-size: 16px;
+    color: #444;
+}
+
+.footer-bar {
+    background: #fafafa url(../images/body-bg.png) top left repeat;
+    padding-top: 30px;
+    padding-bottom: 40px;
+}
+
+.footer-bar p i {
+    color: #8ECC4C;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.header-logo {
+    float: left;
+    border-bottom: 3px solid #8ECC4C;
+}
+
+.header-logo:hover {
+    opacity: 0.6;
+}
+
+.header-links {
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+}
+
+.header-brand, .header-links {
+    height: auto;
+    display: inline-block;
 }

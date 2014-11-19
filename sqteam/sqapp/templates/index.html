@@ -41,6 +41,11 @@
         <!-- BEGIN modals-->
             {% include "user/login_modal.html" %}
             {% include "user/signup_modal.html" %}
+        <script>
+            {% if show_login %}$.UIkit.modal("#login-modal").show();{% endif %}
+
+            {% if show_signup %}$.UIkit.modal("#signup-modal").show();{% endif %}
+        </script>
         <!-- END modals-->
     </div>
 </div>
@@ -66,9 +71,9 @@
         <div class="wide-search-bar">
             <div class="wide-search-bar-wrapper clearfix">
 
-                <form action="/search/" method="GET">
+                <form action="/" method="GET">
                     <div class="text-input-wrapper">
-                        <input type="text" name="q" value="" id="id_site_search">
+                        <input type="text" name="query" value="">
                     </div>
                     <div class="submit-input-wrapper">
 

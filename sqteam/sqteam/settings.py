@@ -21,7 +21,6 @@ SECRET_KEY = 'ng&2c@9j08m^=s56_c3jnx!n@w0cnizefiw@zbfqxjztjy3)%q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
