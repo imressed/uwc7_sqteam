@@ -1,7 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.conf.urls import handler404
-from sqapp import error_views, views
 
 urlpatterns = patterns('',
     url(r'^$', 'sqapp.views.index', name='index'),
@@ -17,5 +16,3 @@ urlpatterns = patterns('',
 
 
 )
-handler404 = views.index
-handler405 = 'sqapp.error_views.method_not_allowed'

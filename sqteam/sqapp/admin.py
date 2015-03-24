@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin
 
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .models import SqUser
+from .models import SqUser, Project, News
 from .forms import UserCreationForm
 
 
@@ -57,6 +57,8 @@ class SqUserAdmin(UserAdmin):
 
 # Now register the new UserAdmin...
 admin.site.register(SqUser, SqUserAdmin)
+admin.site.register(Project)
+admin.site.register(News)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)

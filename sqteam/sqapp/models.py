@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager)
 
@@ -38,6 +39,7 @@ class SqUser(AbstractBaseUser):
     date_of_birth = models.DateField(null=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    projects = models.ManyToManyField('Project', null=True, blank=True)
 
     REQUIRED_FIELDS = []
 
@@ -69,3 +71,43 @@ class SqUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+
+class Project(models.Model):
+
+    name = models.CharField(max_length=100)
+
+    TOPICCHOICE = (
+        (u'Допомога престарілим', u'Допомога престарілим'),
+        (u'Допомога тваринам', u'Допомога тваринам'),
+        (u'Тварина програмісту', u'Тварина програмісту'),
+        (u'Престарілим тварину', u'Престарілим тварину'),
+    )
+
+    LOCATIONCHOICE = (
+        (u'Київ', u'Київ'),
+        (u'Вінниця', u'Вінниця'),
+        (u'Львів', u'Львів'),
+    )
+
+    TYPECHOICE = (
+        (u'Матеріально', u'Матеріально'),
+        (u'Часом', u'Часом'),
+        (u'Кодом', u'Кодом'),
+    )
+
+    id = models.AutoField(primary_key=True)
+    topic = models.CharField(max_length=100, choices=TOPICCHOICE)
+    location = models.CharField(max_length=100, choices=LOCATIONCHOICE)
+    help_type = models.CharField(max_length=100, choices=TYPECHOICE)
+    subscribers = models.ManyToManyField('SqUser', null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class News(models.Model):
+    id = models.AutoField(primary_key=True)
+    date = models.DateTimeField(default=timezone.now)
+    text = models.CharField(max_length=200)
+    projects = models.ForeignKey('Project', null=True, blank=True)
