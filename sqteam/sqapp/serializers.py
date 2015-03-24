@@ -3,7 +3,12 @@ __author__ = 'imressed'
 
 from django.utils import timezone
 from rest_framework import serializers
-from .models import Project, News, SqUser
+
+
+class SqUserSerializer(serializers.Serializer):
+    id = serializers.Field()
+    email = serializers.EmailField()
+
 
 class ProjectSerializer(serializers.Serializer):
     id = serializers.Field()
@@ -18,10 +23,6 @@ class NewsSerializer(serializers.Serializer):
     id = serializers.Field()
     date = serializers.DateTimeField(default=timezone.now)
     text = serializers.CharField(max_length=200)
-    projects = ProjectSerializer(many=True, required=False)
+    #projects = ProjectSerializer(many=True, required=False)
 
 
-class SqUserSerializer(serializers.Serializer):
-    id = serializers.Field()
-    email = serializers.EmailField()
-    projects = ProjectSerializer(many=True, reqired=False)

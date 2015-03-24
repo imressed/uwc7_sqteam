@@ -1,3 +1,5 @@
+from rest_framework import viewsets, permissions
+from rest_framework.response import Response
 from django.shortcuts import render, render_to_response, redirect
 from django.shortcuts import HttpResponse, RequestContext
 from django.contrib.auth import authenticate, login, logout
@@ -8,8 +10,55 @@ from django.views.decorators.http import (require_http_methods, require_POST,
 from django.http import JsonResponse
 
 from .forms import UserCreationForm
+from .models import Project, News, SqUser
+from .serializers import ProjectSerializer, NewsSerializer, SqUserSerializer
 
 from django.contrib import messages
+
+
+class SqUserViewSet(viewsets.ViewSet):
+    model = SqUser
+
+    def list(self, request):
+        queryset = SqUser.objects.all()
+        serializer = SqUserSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = SqUser.objects.all()
+        user = queryset.get(id=pk)
+        serializer = SqUserSerializer(user, many=False)
+        return Response(serializer.data)
+
+
+class ProjectViewSet(viewsets.ViewSet):
+    model = Project
+
+    def list(self, request):
+        queryset = Project.objects.all()
+        serializer = ProjectSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = Project.objects.all()
+        user = queryset.get(id=pk)
+        serializer = ProjectSerializer(user, many=False)
+        return Response(serializer.data)
+
+
+class NewsViewSet(viewsets.ViewSet):
+    model = News
+
+    def list(self, request):
+        queryset = News.objects.all()
+        serializer = NewsSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = News.objects.all()
+        user = queryset.get(id=pk)
+        serializer = NewsSerializer(user, many=False)
+        return Response(serializer.data)
 
 
 
