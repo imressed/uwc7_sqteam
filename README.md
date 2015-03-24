@@ -1,4 +1,4 @@
-sq_template
+volun deer proj
 ===========
 
 django project boilerplate for sq team
