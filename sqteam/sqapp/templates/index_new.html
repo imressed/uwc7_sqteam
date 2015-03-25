@@ -1,0 +1,204 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Volun Deer</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="css/foundation-icons.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/vendor/modernizr.js"></script>
+  </head>
+  <body>
+    
+    <div class="row">
+      <div class="large-offset-3 medium-offset-3 large-2 medium-2 small-5 columns">
+        <img src="img/login.png" alt="For login press on Volun Deer" />
+        <a class="margin-left-5 large-font" href="#" data-reveal-id="modal-register">or Sign Up!</a>
+      </div>
+
+        <div id="modal-register" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+           <div class="row text-center">
+               <h2> Hello, new user!</h2>
+               <h5>By creating an account with us, you will be able to subscribe projects faster, and more.</h5>
+           </div>
+           <form>
+               <div class="row">
+                <div class="large-offset-3 large-6 columns">
+                  <div class="row collapse prefix-radius">
+                    <div class="small-2 large-1 columns">
+                      <span class="prefix"><i class="fi-mail large"></i></span>
+                    </div>
+                    <div class="small-10 large-11 columns">
+                      <input class="icon-font input-height" type="text" placeholder="Email">
+                    </div>
+                  </div>
+                </div>
+                </div>
+
+                <div class="row">
+                <div class="large-offset-3 large-6 columns">
+                  <div class="row collapse prefix-radius">
+                    <div class="small-2 large-1 columns">
+                      <span class="prefix"><i class="fi-key large"></i></span>
+                    </div>
+                    <div class="small-10 large-11 columns">
+                      <input class="icon-font input-height" type="password" placeholder="Password">
+                    </div>
+                  </div>
+                </div>
+                </div>
+
+                <div class="row text-center">
+                   <a href="#" class="button radius">Register</a>
+               </div>
+           </form>
+
+          <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
+
+        <div id="modal-login" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+           <div class="row text-center">
+               <h2>Welcome back!</h2>
+           </div>
+           <form>
+               <div class="row">
+                <div class="large-offset-3 large-6 columns">
+                  <div class="row collapse prefix-radius">
+                    <div class="small-2 large-1 columns">
+                      <span class="prefix"><i class="fi-mail large"></i></span>
+                    </div>
+                    <div class="small-10 large-11 columns">
+                      <input class="icon-font input-height" type="text" placeholder="Email">
+                    </div>
+                  </div>
+                </div>
+                </div>
+
+                <div class="row">
+                <div class="large-offset-3 large-6 columns">
+                  <div class="row collapse prefix-radius">
+                    <div class="small-2 large-1 columns">
+                      <span class="prefix"><i class="fi-key large"></i></span>
+                    </div>
+                    <div class="small-10 large-11 columns">
+                      <input class="icon-font input-height" type="password" placeholder="Password">
+                    </div>
+                  </div>
+                </div>
+                </div>
+
+                <div class="row text-center">
+                   <a href="#" class="button radius">Sign In!</a>
+               </div>
+           </form>
+
+          <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
+        
+      <div class="large-2 medium-2 small-5 large-centered medium-centered columns end margin-top-10">
+        <a href="#" data-reveal-id="modal-login">
+        <img id="deer" src="img/logo.png" alt="Volun Deer"/>
+        </a>
+      </div>
+    </div>
+
+    <h3 class="text-center margin-top-30">Search project:</h3>
+    <form>
+        <div class="row">
+				    <div class="large-4 medium-4 small-12 columns">
+				      <label>Location</label>
+				      <select>
+				        <option selected disabled value="none"></option>
+				        <option value="Kyiv">Kyiv</option>
+				        <option value="Vinnitsa">Vinnitsa</option>
+				        <option value="Lviv">Lviv</option>
+				      </select>
+				    </div>
+				    <div class="large-4 medium-4 small-12 columns">
+				      <label>Topic</label>
+				      <select>
+                        <option selected disabled value="none"></option>
+				        <option value="1">Save a programmer</option>
+				        <option value="2">Save a dog</option>
+				        <option value="3">Save elderly people</option>
+				        <option value="4">Dog for programmer</option>
+				      </select>
+				    </div>
+				    <div class="large-4 medium-4 small-12 columns">
+				      <label>Type</label>
+				      <select>
+                        <option selected disabled value="none"></option>
+				        <option value="money">Money</option>
+				        <option value="time">Time</option>
+				        <option value="code">Code</option>
+				      </select>
+				    </div>
+          </div>
+        <div class="row text-center">
+            <a href="#" id="start_search" class="large radius success button">Start search</a>
+        </div>
+    </form>
+
+    <div id="results" class="row">
+        <h3 class="columns">Results:</h3>
+        <ul class="accordion" data-accordion role="tablist">
+
+          <li class="accordion-navigation">
+            <a href="#panel1d" role="tab" id="panel1d-heading" aria-controls="panel1d">
+                <div class="row">
+                    <div class="columns large-6 medium-6 small-6">
+                        <p class="no-bottom-margin">Project 1</p>
+                    </div>
+
+                    <div class="text-right large-6 medium-6 small-6 columns">
+                        <p class="no-bottom-margin link-like">learn more and subscribe</p>
+                    </div>
+               </div>
+            </a>
+            <div id="panel1d" class="content" role="tabpanel" aria-labelledby="panel1d-heading">
+              Panel 1. Lorem ipsum dolor
+               <div class="large-6 medium-6 small-12 large-centered medium-centered small-centered columns">
+                   <input type="text" placeholder="your email..." />
+               </div>
+                <div class="large-4 medium-6 small-10 large-centered medium-centered small-centered columns">
+                   <a href="#" class="button radius expand">Subscribe</a>
+               </div>
+            </div>
+          </li>
+
+          <li class="accordion-navigation">
+            <a href="#panel2d" role="tab" id="panel2d-heading" aria-controls="panel2d">
+                <div class="row">
+                    <div class="columns large-6 medium-6 small-6">
+                        <p class="no-bottom-margin">Project 2</p>
+                    </div>
+
+                    <div class="text-right large-6 medium-6 small-6 columns">
+                        <p class="no-bottom-margin link-like">learn more and subscribe</p>
+                    </div>
+               </div>
+            </a>
+            <div id="panel2d" class="content" role="tabpanel" aria-labelledby="panel1d-heading">
+              Panel 2. Lorem ipsum dolor
+               <div class="large-6 medium-6 small-12 large-centered medium-centered small-centered columns">
+                   <input class="input-height icon-font" type="text" placeholder="your email..." />
+               </div>
+                <div class="large-4 medium-6 small-10 large-centered medium-centered small-centered columns">
+                   <a href="#" id="proj2sub" class="button radius expand">Subscribe</a>
+               </div>
+            </div>
+          </li>
+        </ul>
+    </div>
+
+    <div id="footer" class="text-center"><h3 id="love"> Made with <i class="fi-heart large logo-icon"></i> at sqteam! </h3></div>
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>
