@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import (require_http_methods, require_POST,
                                           require_GET)
 from django.http import JsonResponse
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
 
 from .forms import UserCreationForm
 from .models import Project, News, SqUser
@@ -125,5 +127,29 @@ def subscribe(request, project_id):
     })
 
 def search(request):
-    return JsonResponse([p.serialize() for p in Project.objects.all()], safe=False)
+    search_fields = ('help_type', 'location', 'topic')
+    projects = Project.objects.all()
+    for sf in search_fields:
+        value = request.GET.get(sf, '')
+        params = {sf: value}
+        if value:
+            projects = projects.filter(**params)
+
+    return JsonResponse([p.serialize() for p in projects], safe=False)
+
+#todo: for the sake of simplicity just use finished serializer instead of these two views
+def get_news(request, project_id):
+
+    news = News.objects.filter(project=project_id)
+
+    return JsonResponse([n.serialize() for n in news], safe=False)
+
+
+@receiver(pre_save)
+def deliver_mails(sender, instance, *args, **kwargs):
+    if isinstance(instance, News):
+        subs = instance.project.subscribers.all()
+        for s in subs:
+            print(s.email)
+
 

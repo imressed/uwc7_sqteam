@@ -214,7 +214,11 @@
         $("#start-search").click(function() {
             var prList = $("#projects-list");
             prList.empty();
-            $.getJSON("/search", function(data) {
+            $.getJSON("/search", {
+                location: $("#location-select").val(),
+                topic: $("#topic-select").val(),
+                help_type: $("#type-select").val()
+            }, function(data) {
                 $.each(data, function(index, value) {
 
                     var prNameDiv = $("<div />", {

@@ -123,7 +123,14 @@ class News(models.Model):
     id = models.AutoField(primary_key=True)
     date = models.DateTimeField(default=timezone.now)
     text = models.CharField(max_length=200)
-    projects = models.ForeignKey('Project', null=True, blank=True)
+    project = models.ForeignKey('Project', null=True, blank=True)
 
     def __str__(self):
         return self.text[:40]
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'date': self.date.strftime('%H:%M %d/%b/%y'),
+            'text': self.text
+        }
