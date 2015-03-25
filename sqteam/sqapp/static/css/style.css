@@ -1,3 +1,4 @@
+@import "http://webfonts.ru/import/b20sans.css";
 .margin-left-5{
     margin-left: 5px;
 }
@@ -20,7 +21,7 @@ label, p {
 }
 
 .large-font{
-    font-size:1.2rem;
+    font-size:1.2rem !important;
 }
 .icon-font{
     font-size:1.3rem !important;
@@ -42,4 +43,19 @@ label, p {
 #deer:hover {
   -webkit-transform: rotate(360deg);
   transform: rotate(360deg);
+}
+.width-100{
+    width: 100%;
+}
+
+body{
+    background-image: url("../images/geometry2.png");
+}
+
+.margin-minus-9{
+    margin-left: -9px;
+}
+
+td{
+    font-size: 1.2rem !important;
 }

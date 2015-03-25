@@ -4,16 +4,17 @@
 {% block whole_body %}
 <div class="row">
       <div class="large-offset-3 medium-offset-3 large-2 medium-2 small-5 columns">
-        <img src="{% static 'images/login.png' %}" alt="For login press on Volun Deer" />
-        <a class="margin-left-5 large-font" href="#" data-reveal-id="modal-register">or Sign Up!</a>
+        <a href="#" data-reveal-id="modal-login"><img src="{% static 'images/login.png' %}" alt="For login press on Volun Deer" /></a>
+        <a class="margin-minus-9 large-font" href="#" data-reveal-id="modal-register">Зареєструйтеся!</a>
       </div>
 
         <div id="modal-register" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
            <div class="row text-center">
-               <h2> Hello, new user!</h2>
-               <h5>By creating an account with us, you will be able to subscribe projects faster, and more.</h5>
+               <h2>Привіт, ми раді новим знайомствам!</h2>
+               <h5>Створивши акаунт, Ви зможете підписуватися на волонтерські проекти швидше, а також багато іншого.</h5>
            </div>
-           <form>
+           <form id="signup-form" class="uk-form" method="post" action="{% url 'signup' %}">
+               {% csrf_token %}
                <div class="row">
                 <div class="large-offset-3 large-6 columns">
                   <div class="row collapse prefix-radius">
@@ -21,7 +22,7 @@
                       <span class="prefix"><i class="fi-mail large"></i></span>
                     </div>
                     <div class="small-10 large-11 columns">
-                      <input class="icon-font input-height" type="text" placeholder="Email">
+                      <input class="icon-font input-height" type="text" name="email" placeholder="Введіть ваш email">
                     </div>
                   </div>
                 </div>
@@ -34,14 +35,14 @@
                       <span class="prefix"><i class="fi-key large"></i></span>
                     </div>
                     <div class="small-10 large-11 columns">
-                      <input class="icon-font input-height" type="password" placeholder="Password">
+                      <input class="icon-font input-height" type="password" name="password" placeholder="Придумайте гарний пароль">
                     </div>
                   </div>
                 </div>
                 </div>
 
                 <div class="row text-center">
-                   <a href="#" class="button radius">Register</a>
+                   <a href="#" id="signup-button" class="button radius">Register</a>
                </div>
            </form>
 
@@ -50,9 +51,10 @@
 
         <div id="modal-login" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
            <div class="row text-center">
-               <h2>Welcome back!</h2>
+               <h2>Доброго дня!</h2>
            </div>
-           <form>
+           <form id="login-form" class="uk-form" method="post" action="{% url 'login' %}">
+               {% csrf_token %}
                <div class="row">
                 <div class="large-offset-3 large-6 columns">
                   <div class="row collapse prefix-radius">
@@ -60,7 +62,7 @@
                       <span class="prefix"><i class="fi-mail large"></i></span>
                     </div>
                     <div class="small-10 large-11 columns">
-                      <input class="icon-font input-height" type="text" placeholder="Email">
+                      <input class="icon-font input-height" type="email" name="username" placeholder="Ваш email">
                     </div>
                   </div>
                 </div>
@@ -73,14 +75,14 @@
                       <span class="prefix"><i class="fi-key large"></i></span>
                     </div>
                     <div class="small-10 large-11 columns">
-                      <input class="icon-font input-height" type="password" placeholder="Password">
+                      <input class="icon-font input-height" type="password" name="password" placeholder="Пароль">
                     </div>
                   </div>
                 </div>
                 </div>
 
                 <div class="row text-center">
-                   <a href="#" class="button radius">Sign In!</a>
+                   <a href="#" id="login-button" class="button radius">Увійти!</a>
                </div>
            </form>
 
@@ -99,17 +101,17 @@
         <div class="row">
             <div class="large-4 medium-4 small-12 columns">
               <label>Розташування</label>
-              <select>
-                <option selected disabled value="none"></option>
+              <select class="large-font">
+                <option selected value="none">Всі</option>
                 <option value="Kyiv">Київ</option>
                 <option value="Vinnitsa">Вінниця</option>
                 <option value="Lviv">Львів</option>
               </select>
             </div>
 				    <div class="large-4 medium-4 small-12 columns">
-				      <label>Topic</label>
-				      <select>
-                        <option selected disabled value="none"></option>
+				      <label>Тематика програми</label>
+				      <select class="large-font">
+                        <option selected value="none">Всі</option>
 				        <option value="1">Save a programmer</option>
 				        <option value="2">Save a dog</option>
 				        <option value="3">Save elderly people</option>
@@ -118,8 +120,8 @@
 				    </div>
 				    <div class="large-4 medium-4 small-12 columns">
 				      <label>Тип допомоги</label>
-				      <select>
-                        <option selected disabled value="none"></option>
+				      <select class="large-font">
+                        <option selected value="none">Всі</option>
 				        <option value="money">Матеріально</option>
 				        <option value="time">Часом</option>
 				        <option value="code">Кодом</option>
@@ -150,13 +152,32 @@
             </a>
 
             <div id="panel1d" class="content" role="tabpanel" aria-labelledby="panel1d-heading">
-              Panel 1. Lorem ipsum dolor
-               <div class="large-6 medium-6 small-12 large-centered medium-centered small-centered columns">
-                   <input type="text" placeholder="your email..." />
-               </div>
+               <p>Short description of this project what to do here?? i don't know...</p>
+               <div>
+                   <p>Project news:</p>
+                   <table class="width-100 large-font">
+                      <tbody>
+                        <tr>
+                          <td>23/12/20145</td>
+                          <td>This is longer content Donec id elit non mi porta gravida at eget metus.</td>
+                        </tr>
+                        <tr>
+                          <td>23/12/20145</td>
+                          <td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
+                        </tr>
+                        <tr>
+                          <td>23/12/20145</td>
+                          <td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
 
+               <div class="large-6 medium-6 small-12 large-centered medium-centered small-centered columns">
+                   <input class="large-font" type="text" name="subscribe" placeholder="your email..." />
+               </div>
                 <div class="large-4 medium-6 small-10 large-centered medium-centered small-centered columns">
-                   <a href="#" class="button radius expand">Subscribe</a>
+                   <a href="#" id="proj1sub" class="button radius expand large-font">Subscribe</a>
                </div>
 
             </div>

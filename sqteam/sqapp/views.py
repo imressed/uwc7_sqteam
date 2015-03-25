@@ -86,7 +86,8 @@ def login_func(request):
                             password=login_form.cleaned_data.get('password'))
         if user is not None:
             login(request, user)
-            return JsonResponse({'success': True, 'next': '/app'})
+            return JsonResponse({'success': True,
+                                 'message': 'Success login'})
     else:
         return JsonResponse({'success': False,
                              'errors': login_form.errors})
