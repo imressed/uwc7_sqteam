@@ -105,9 +105,15 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+    def __repr__(self):
+        return self.name
+
 
 class News(models.Model):
     id = models.AutoField(primary_key=True)
     date = models.DateTimeField(default=timezone.now)
     text = models.CharField(max_length=200)
     projects = models.ForeignKey('Project', null=True, blank=True)
+
+    def __str__(self):
+        return self.text[:40]

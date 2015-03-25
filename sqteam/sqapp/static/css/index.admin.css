@@ -1,0 +1,60 @@
+#wrap {
+    background: none;
+}
+
+.feature-block {
+    margin-bottom: 25px;
+}
+
+.feature-block .ico {
+    font-size: 37px;
+    line-height: 70px;
+    width:70px;
+    height: 70px;
+    /*background: #5295b0;*/
+    background: #d49248;
+    display: inline-block;
+    border-radius: 50%;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
+.feature-block .name {
+    font-size: 20px;
+    line-height: 1.25em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.feature-block .text {
+    font-size: 12px;
+    line-height: normal;
+    margin-bottom: 15px;
+}
+
+.feature-block a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.feature-block a:hover {
+    color: #e07517;
+}
+
+.admin-logo img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.admin-logo h2 {
+    font-size: 28px;
+    text-shadow: 2px 2px #e07517;
+}
+
+.admin-logo {
+    margin-left: -150px;
+    margin-bottom: 60px;
+}

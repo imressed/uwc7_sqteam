@@ -1,0 +1,115 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+
+{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row-fluid text-center admin-logo">
+        <img src="{% static 'images/logo_project.png' %}" />
+        <h2>Volun Deer. Керування проектом</h2>
+    </div>
+    <div class="row-fluid text-center">
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                    <div class="feature-block">
+
+                        <a href="/admin/sqapp/project">
+                            <div class="ico fa fa-life-ring"></div>
+                            <div class="name">
+                                Проекти
+                            </div>
+                            <div class="text">Волонтерські програми на будь-який смак</div>
+                        </a>
+                        <div class="more">
+                            <a href="/admin/sqapp/project/add" class="btn btn-default btn-sm">Додати новий проект</a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                    <div class="feature-block">
+                        <a href="/admin/sqapp/news">
+                            <div class="ico fa fa-book"></div>
+                            <div class="name">
+                                Новини
+                            </div>
+                            <div class="text">Усі новини системи та зміни у проектах</div>
+                        </a>
+                        <div class="more">
+                            <a href="/admin/sqapp/news/add" class="btn btn-default btn-sm">Додати новину</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                    <div class="feature-block">
+                        <a href="/admin/sqapp/squser">
+                            <div class="ico fa fa-users"></div>
+                            <div class="name">
+                                Спільнота
+                            </div>
+                            <div class="text">Список усіх волонтерів системи</div>
+                        </a>
+
+                        <div class="more">
+                            <a href="/admin/sqapp/squser/add/" class="btn btn-default btn-sm">Залучити нового користувача</a>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>
+{% endblock %}
+
+{% comment "Without previous actions" %}
+{% block sidebar %}
+  <div id="content-related">
+    <div class="module" id="recent-actions-module">
+      <h4 class="italic-title">{% trans 'My Actions sdf' %}</h4>
+
+      {% load log %}
+      {% get_admin_log 10 as admin_log for_user user %}
+      {% if not admin_log %}
+        <p>{% trans 'None available' %}</p>
+      {% else %}
+        <ul class="actionlist">
+          {% for entry in admin_log %}
+            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}text-error{% endif %}">
+
+              <i class="{% if entry.is_addition %}icon-plus{% endif %}{% if entry.is_change %}icon-pencil{% endif %}{% if entry.is_deletion %}icon-trash{% endif %} icon-alpha5"></i>
+
+              {% spaceless %}
+                {% if entry.is_addition %}{% trans 'added'|capfirst %}{% endif %}
+                {% if entry.is_change %}{% trans 'changed'|capfirst %}{% endif %}
+                {% if entry.is_deletion %}{% trans 'deleted'|capfirst %}{% endif %}
+
+                {% if entry.content_type %}
+                  <span class="mini quiet">{% filter capfirst %}
+                    {% trans entry.content_type.name %}{% endfilter %}</span>
+                {% else %}
+                  <span class="mini quiet">{% trans 'Unknown content' %}</span>
+                {% endif %}
+              {% endspaceless %}&nbsp;
+
+              {% if entry.is_deletion or not entry.get_admin_url %}
+                <span class="color-grey">{{ entry.object_repr }}</span>
+              {% else %}
+                <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+{% endcomment %}
