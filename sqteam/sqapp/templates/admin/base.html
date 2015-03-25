@@ -148,7 +148,10 @@
             <!-- END Content -->
           </div>
         {% endblock %}
+        <div id="suit-left" class="suit-column">
+            <img id="back-arrow" src="{% static 'images/back-button.png' %}" title="Повернутися назад" />
 
+        </div>
 
         {% comment 'Without left sidebar menu' %}
         {% block content-left %}
@@ -216,7 +219,22 @@
 {% endblock %}
 
   <script src="{% static 'suit/js/suit.js' %}"></script>
-  {% block extrajs %}{% endblock %}
+  {% block extrajs %}
+      <script>
+      $(document).ready(function() {
+          console.log(window.location);
+          if(window.history.length != 1 && window.location.pathname != "/admin/") {
+              $("#back-arrow").click(function() {
+                   window.history.back();
+              });
+          }
+          else {
+              $("#back-arrow").hide();
+          }
+      });
+      </script>
+
+  {% endblock %}
 
 </body>
 </html>

@@ -1,6 +1,8 @@
+import json
+
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
-from django.shortcuts import render, render_to_response, redirect
+from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.shortcuts import HttpResponse, RequestContext
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -94,6 +96,7 @@ def logout_func(request):
     logout(request)
     return redirect('index')
 
+
 @require_POST
 def signup_func(request):
     signup_form = UserCreationForm(data=request.POST)
@@ -108,4 +111,15 @@ def signup_func(request):
 
 def app_view(request):
     return render(request, 'app.html')
+
+
+@login_required
+def subscribe(request, project_id):
+    pr = get_object_or_404(Project, pk=int(project_id))
+    user = request.user
+    pr.subscribers.add(user)
+    return JsonResponse({
+        'success': True,
+        'message': u'User {0} has been subscribed to the {1}'.format(user.email, pr.name)
+    })
 
