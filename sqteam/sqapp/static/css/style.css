@@ -10,12 +10,15 @@
 .no-bottom-margin{
     margin-bottom: 0px;
 }
-.link-like{
-    color:#008CBA;
+.link-like {
+    color: #008CBA;
+    display: none;
 }
-label, p{
+
+label, p {
     font-size:1.4rem;
 }
+
 .large-font{
     font-size:1.2rem;
 }

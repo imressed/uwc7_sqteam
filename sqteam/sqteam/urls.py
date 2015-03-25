@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^app/', 'sqapp.views.app_view', name='app'),
 
     url(r'^subscribe/(?P<project_id>\d+)', 'sqapp.views.subscribe', name='subscribe'),
+    url(r'^search', 'sqapp.views.search', name='search'),
 
     # url(r'^blog/', include('blog.urls')),
 

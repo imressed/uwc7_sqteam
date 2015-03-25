@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>{% block title %}Volun Deer - кращий сайт пошуку волонтерської допомоги{% endblock %}</title>
+
+        {% load staticfiles %}
+
+        <script src={% static "js/jquery.js" %}></script>
+        <script src={% static "js/jquery.cookie.js" %}></script>
+        <link rel="icon"
+              type="image/icon"
+              href="/static/favicon.ico">
+
+        {% block styles %}
+            <link rel="stylesheet" href="{% static 'css/foundation.css' %}" />
+            <link rel="stylesheet" href="{% static 'css/foundation-icons.css' %}" />
+            <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+        {% endblock %}
+
+        {% block scripts %}
+            <script src="{% static 'js/vendor/modernizr.js' %}"></script>
+
+        {% endblock %}
+
+    </head>
+
+<body>
+    {% block flash_messages %}
+
+        {% if messages %}
+            {% for message in messages %}
+
+            {% endfor %}
+        {% endif %}
+
+    {% endblock %}
+
+    {% block whole_body %}
+
+        {% block navigation %}
+{#            {% include "navigation.html" with menu_item=''%}#}
+        {% endblock %}
+
+        {% block content %}
+        {% endblock %}
+
+    {% endblock %}
+
+    {% block bottom_scripts %}
+    {% endblock %}
+
+</body>
+</html>

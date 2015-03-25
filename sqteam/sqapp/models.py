@@ -75,7 +75,7 @@ class SqUser(AbstractBaseUser):
 
 class Project(models.Model):
 
-    name = models.CharField(max_length=100)
+
 
     TOPICCHOICE = (
         (u'Допомога престарілим', u'Допомога престарілим'),
@@ -97,6 +97,7 @@ class Project(models.Model):
     )
 
     id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
     topic = models.CharField(max_length=100, choices=TOPICCHOICE)
     location = models.CharField(max_length=100, choices=LOCATIONCHOICE)
     help_type = models.CharField(max_length=100, choices=TYPECHOICE)
@@ -107,6 +108,15 @@ class Project(models.Model):
 
     def __repr__(self):
         return self.name
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'topic': self.topic,
+            'location': self.location,
+            'help_type': self.help_type
+        }
 
 
 class News(models.Model):

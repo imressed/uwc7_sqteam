@@ -67,7 +67,7 @@ class NewsViewSet(viewsets.ViewSet):
 def index(request):
     login_form = AuthenticationForm()
     signup_form = UserCreationForm()
-    return render(request, 'index.html', {'login_form': login_form,
+    return render(request, 'index_new.html', {'login_form': login_form,
                                           'signup_form': signup_form})
 
 @require_GET
@@ -122,4 +122,7 @@ def subscribe(request, project_id):
         'success': True,
         'message': u'User {0} has been subscribed to the {1}'.format(user.email, pr.name)
     })
+
+def search(request):
+    return JsonResponse([p.serialize() for p in Project.objects.all()], safe=False)
 
