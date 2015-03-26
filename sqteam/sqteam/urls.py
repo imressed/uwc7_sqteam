@@ -22,7 +22,8 @@ urlpatterns = patterns('',
     url(r'^signup/', 'sqapp.views.signup_view', name='signup view'),
     url(r'^app/', 'sqapp.views.app_view', name='app'),
 
-    url(r'^subscribe/(?P<project_id>\d+)', 'sqapp.views.subscribe', name='subscribe'),
+    #url(r'^subscribe/(?P<project_id>\d+)', 'sqapp.views.subscribe', name='subscribe'),
+    url(r'^subscribe/', 'sqapp.views.subscribe', name='subscribe'),
     url(r'^news/(?P<project_id>\d+)', 'sqapp.views.get_news', name='news'),
     url(r'^search', 'sqapp.views.search', name='search'),
 

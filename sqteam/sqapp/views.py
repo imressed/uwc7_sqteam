@@ -67,10 +67,10 @@ class NewsViewSet(viewsets.ViewSet):
 
 
 def index(request):
-    login_form = AuthenticationForm()
-    signup_form = UserCreationForm()
-    return render(request, 'index_new.html', {'login_form': login_form,
-                                          'signup_form': signup_form})
+    #login_form = AuthenticationForm()
+    #signup_form = UserCreationForm()
+    return render(request, 'index_new.html')
+    #, {'login_form': login_form, 'signup_form': signup_form})
 
 @require_GET
 def login_view(request):
@@ -117,9 +117,16 @@ def app_view(request):
 
 
 @login_required
-def subscribe(request, project_id):
+def subscribe(request):
+    project_id = request.POST.get('project_id')
+    user_mail = request.POST.get('email')
+    try:
+        user = SqUser.objects.get(email=user_mail)
+    except SqUser.DoesNotExist:
+        print('New user was created')
+        user = SqUser.objects.create_user(email=user_mail,
+                                          password=SqUser.objects.make_random_password(length=8))
     pr = get_object_or_404(Project, pk=int(project_id))
-    user = request.user
     pr.subscribers.add(user)
     return JsonResponse({
         'success': True,

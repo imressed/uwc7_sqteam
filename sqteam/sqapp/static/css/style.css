@@ -63,3 +63,11 @@ td{
 .active{
     background-color: #d49248 ;
 }
+
+.news-date {
+    font-weight: bold;
+}
+
+.subscribed-button {
+    display: none;
+}

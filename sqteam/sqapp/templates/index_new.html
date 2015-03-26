@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="row text-center">
-                   <a href="#" id="signup-button" class="button radius">Register</a>
+                   <a href="#" id="signup-button" class="button radius">Створити акаунт</a>
                </div>
            </form>
 
@@ -133,60 +133,76 @@
         </div>
     </form>
 
-    <div id="results" class="row">
+
+
+    {% verbatim %}
+    <script id="results-template" type="text/x-handlebars-template">
+        {{#if projects }}
         <h3 class="columns">Знайдені програми</h3>
         <ul class="accordion" data-accordion role="tablist" id="projects-list">
+            {{#each projects }}
+            <li class="accordion-navigation" data-project-id="{{ this.id }}" >
+                <a class="project-link" href="#panel{{@index }}" role="tab" id="panel{{@index }}-heading" aria-controls="panel{{@index }}" data-id="{{@index  }}">
+                    <div class="row">
+                        <div class="columns large-6 medium-6 small-6">
+                            <p class="no-bottom-margin">{{ this.name }}</p>
+                        </div>
 
-          <li class="accordion-navigation">
+                        <div class="text-right large-6 medium-6 small-6 columns">
+                            <p class="no-bottom-margin link-like" id="more-{{@index }}">Дізнатись докладніше</p>
+                        </div>
+                   </div>
+                </a>
 
-            <a href="#panel1d" role="tab" id="panel1d-heading" aria-controls="panel1d">
-                <div class="row">
-                    <div class="columns large-6 medium-6 small-6">
-                        <p class="no-bottom-margin">Project 1</p>
-                    </div>
+                <div id="panel{{@index }}" class="content" role="tabpanel" aria-labelledby="panel{{@index }}-heading">
+                    <p>{{ this.text }}</p>
 
-                    <div class="text-right large-6 medium-6 small-6 columns">
-                        <p class="no-bottom-margin link-like">learn more and subscribe</p>
-                    </div>
-               </div>
-            </a>
-
-            <div id="panel1d" class="content" role="tabpanel" aria-labelledby="panel1d-heading">
-               <p>Short description of this project what to do here?? i don't know...</p>
-               <div>
-                   <p>Project news:</p>
-                   <table class="width-100 large-font">
-                      <tbody>
-                        <tr>
-                          <td>23/12/20145</td>
-                          <td>This is longer content Donec id elit non mi porta gravida at eget metus.</td>
-                        </tr>
-                        <tr>
-                          <td>23/12/20145</td>
-                          <td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
-                        </tr>
-                        <tr>
-                          <td>23/12/20145</td>
-                          <td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <div class="news-block" id="news-for-{{ this.id }}"></div>
+                    <form action="/subscribe/">
+                        <div class="large-6 medium-6 small-12 large-centered medium-centered small-centered columns">
+                           <input class="large-font" type="text" name="email" placeholder="Ваш e-mail" required />
+                           <input type="hidden" name="project_id" value="{{ this.id }}" />
+                        </div>
+                        <div class="large-4 medium-6 small-10 large-centered medium-centered small-centered columns">
+                           <a href="#" onclick="return false;" class="subscribe-button button radius expand">Підписатися</a>
+                           <a href="#" class="subscribed-button disabled success button radius expand"><i class='fi-check icon-font'></i> Ви підписані</a>
+                        </div>
+                    </form>
                 </div>
 
-               <div class="large-6 medium-6 small-12 large-centered medium-centered small-centered columns">
-                   <input class="large-font" type="text" name="subscribe" placeholder="your email..." />
-               </div>
-                <div class="large-4 medium-6 small-10 large-centered medium-centered small-centered columns">
-                   <a href="#" id="proj1sub" class="button radius expand large-font">Subscribe</a>
-               </div>
-
-            </div>
-
-          </li>
-
+            </li>
+            {{/each }}
 
         </ul>
+        {{else }}
+        <h3 class="columns">Немає благодійних програм за даними критеріями</h3>
+        {{/if }}
+    </script>
+
+    <script id="news-template" type="text/x-handlebars-template">
+    {{#if news }}
+    <p>Новини проекту:</p>
+    <table class="width-100 large-font">
+        <tbody>
+        {{#each news }}
+        <tr>
+            <td class="news-date">{{ this.date }}</td>
+            <td>{{ this.text }}</td>
+        </tr>
+        {{/each }}
+        </tbody>
+    </table>
+    {{else }}
+        <p>Новин ще немає. Підпишіться і будьте першим, хто дізнається про події проекту</p>
+    {{/if }}
+    </script>
+    {% endverbatim %}
+
+
+    <div id="results" class="row">
+
     </div>
+
 </div>
 
     <div id="footer" class="text-center"><h3 id="love"> Made with <i class="fi-heart large logo-icon"></i> at sqteam! </h3></div>
@@ -196,6 +212,7 @@
 
 {% block bottom_scripts %}
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/handlebars.js' %}"></script>
     <script src="{% static 'js/foundation.min.js' %}"></script>
     <script>
       $(document).foundation();
@@ -203,92 +220,60 @@
 
     <script>
 
-    $(document).on("mouseenter mouseleave", ".accordion-navigation", function() {
-            var id = $(this).data("id");
-            $("#more"+id).toggle();
+    $(document).on("mouseenter mouseleave", ".project-link", function() {
+        var id = $(this).data("id");
+        $("#more-"+id).toggle();
+    });
+
+    $(document).on("click", ".subscribe-button", function() {
+        var form = $(this).closest("form");
+        var url = form.attr("action");
+        var csrftoken = $.cookie('csrftoken');
+        $.ajax({
+            url: url,
+            method: "POST",
+            data: form.serialize(),
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRFToken', csrftoken);
+            },
+            success: function() {
+                form.find("input[name='email']").css("display", "none");
+                form.find(".subscribe-button").css("display", "none");
+                form.find(".subscribed-button").css("display", "block")
+            }
         });
+    });
 
     $(document).on("click", ".accordion-navigation", function() {
         var projectId = $(this).data("project-id");
         var prId = $(this).data("id");
         $.getJSON("/news/"+projectId, function(data) {
-                var prPanel = $("#panel"+prId);
-                prPanel.empty();
-                var prTable = $("<table />", {
-                    class: "width-100 large-font"
-                }).appendTo(prPanel);
-                var nsTableBody = $("<tbody />");
-                $.each(data, function(index, value) {
-                    $("<tr><td>"+ value.date + "</td><td>" + value.text + "</td></tr>").appendTo(nsTableBody);
-                });
-                prTable.append(nsTableBody);
-                prPanel.append(prTable);
-            }
-        );
+            var prNews = $("#news-for-"+projectId);
+            var source = $("#news-template").html();
+            var template = Handlebars.compile(source);
+            var resHtml = template({news: data});
+            prNews.html(resHtml);
+
+        });
     });
 
     $(document).ready(function() {
 
-
         $("#start-search").click(function() {
-            var prList = $("#projects-list");
-            prList.empty();
+            var prResults = $("#results");
             $.getJSON("/search", {
                 location: $("#location-select").val(),
                 topic: $("#topic-select").val(),
                 help_type: $("#type-select").val()
             }, function(data) {
-                $.each(data, function(index, value) {
-
-                    var prNameDiv = $("<div />", {
-                        class: "columns large-6 medium-6 small-6"
-                    });
-
-                    var prNameP = $("<p />", {
-                        class: "no-bottom-margin",
-                        text: value.name
-                    }).appendTo(prNameDiv);
-
-                    var prMoreDiv = $("<div />", {
-                        class: "text-right large-6 medium-6 small-6 columns"
-                    });
-
-                    var prMoreP = $("<p />", {
-                        class: "no-bottom-margin link-like",
-                        id: "more"+index,
-                        text: "Дізнатись докладніше"
-                    }).appendTo(prMoreDiv);
-
-                    var prRow = $("<div />", {
-                        class: "row"
-                    }).append(prNameDiv).append(prMoreDiv);
-
-                    var prLi = $("<li />", {
-                        class: "accordion-navigation",
-                        "data-id": index,
-                        "data-project-id": value.id
-                    });
-
-                    var prLink = $("<a />", {
-                       href: "#panel"+index,
-                       role: "tab",
-                       "aria-controls": "panel"+index
-                    }).append(prRow).appendTo(prLi);
-
-
-
-                    var prPanel = $("<div />", {
-                        id: "panel"+index,
-                        class: "content",
-                        role: "tabpanel",
-                        "aria-labelledby": "panel"+index+"-heading",
-                        text: "Inside me"
-                    }).appendTo(prLi);
-
-                    prList.append(prLi);
-                });
+                var source = $("#results-template").html();
+                var template = Handlebars.compile(source);
+                var resHtml = template({projects: data});
+                prResults.html(resHtml);
+                $(document).foundation();
             });
         })
+
     });
     </script>
 {% endblock %}
