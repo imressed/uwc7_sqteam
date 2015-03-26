@@ -67,6 +67,14 @@ td{
     background-color: #d49248 ;
 }
 
+.news-date {
+    font-weight: bold;
+}
+
+.subscribed-button {
+    display: none;
+}
+
 .display-none{
     display: none;
 }
