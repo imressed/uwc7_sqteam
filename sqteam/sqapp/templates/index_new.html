@@ -17,7 +17,7 @@
                <h2>Привіт, ми раді новим знайомствам!</h2>
                <h5>Створивши акаунт, Ви зможете підписуватися на волонтерські проекти швидше, а також багато іншого.</h5>
            </div>
-            <div class="row">
+            <div id="signup-errors-container" class="row">
                 <div class="alert-box alert radius display-none large-10 medium-10 small-12 large-centered medium-centered columns" id="signup-errors" data-alert class="alert-box" tabindex="0" aria-live="assertive" role="dialogalert"></div>
              </div>
            <form id="signup-form" class="uk-form" method="post" action="{% url 'signup' %}">
@@ -175,11 +175,12 @@
                     <div class="news-block" id="news-for-{{ this.id }}"></div>
                     <form action="/subscribe/">
                         <div class="large-6 medium-6 small-12 large-centered medium-centered small-centered columns">
-                           <input class="large-font" type="text" name="email" placeholder="Ваш e-mail" required />
+                           <input class="large-font" type="email" name="email" placeholder="Ваш e-mail" required />
                            <input type="hidden" name="project_id" value="{{ this.id }}" />
                         </div>
                         <div class="large-4 medium-6 small-10 large-centered medium-centered small-centered columns">
-                           <a href="#" onclick="return false;" class="subscribe-button button radius expand">Підписатися</a>
+                           <a href="#" type="submit" onclick="return false;" class="subscribe-button button radius expand">Підписатися</a>
+
                            <a href="#" class="subscribed-button disabled success button radius expand"><i class='fi-check icon-font'></i> Ви підписані</a>
                         </div>
                     </form>
@@ -244,6 +245,10 @@
         var form = $(this).closest("form");
         var url = form.attr("action");
         var csrftoken = $.cookie('csrftoken');
+        if (form.find("input[name='email']").val() === ""){
+            alert("Введіть Ваш email.");
+            return false;
+        }
         $.ajax({
             url: url,
             method: "POST",
@@ -285,8 +290,10 @@
                 var template = Handlebars.compile(source);
                 var resHtml = template({projects: data});
                 prResults.html(resHtml);
-                $("body").find("input[name=email]").val($("#login-form").find("input[name=username]").val());
-                $("body").find("input[name=email]").hide();
+
+                //$("body").find("input[name=email]").val($("#login-form").find("input[name=username]").val());
+                //$("body").find("input[name=email]").hide();
+
                 $(document).foundation();
             });
         })
