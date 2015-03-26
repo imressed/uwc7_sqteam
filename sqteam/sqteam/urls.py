@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^logout/', 'sqapp.views.logout_func', name='logout'),
     url(r'^user/signup/', 'sqapp.views.signup_func', name='signup'),
     url(r'^signup/', 'sqapp.views.signup_view', name='signup view'),
-    url(r'^app/', 'sqapp.views.app_view', name='app'),
+    #url(r'^app/', 'sqapp.views.app_view', name='app'),
 
     #url(r'^subscribe/(?P<project_id>\d+)', 'sqapp.views.subscribe', name='subscribe'),
     url(r'^subscribe/', 'sqapp.views.subscribe', name='subscribe'),

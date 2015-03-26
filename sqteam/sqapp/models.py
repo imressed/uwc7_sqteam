@@ -32,6 +32,49 @@ class SqUserManager(BaseUserManager):
         return user
 
 
+class Project(models.Model):
+    TOPICCHOICE = (
+        (u'Допомога престарілим', u'Допомога престарілим'),
+        (u'Допомога тваринам', u'Допомога тваринам'),
+        (u'Тварина програмісту', u'Тварина програмісту'),
+        (u'Престарілим тварину', u'Престарілим тварину'),
+    )
+
+    LOCATIONCHOICE = (
+        (u'Київ', u'Київ'),
+        (u'Вінниця', u'Вінниця'),
+        (u'Львів', u'Львів'),
+    )
+
+    TYPECHOICE = (
+        (u'Матеріально', u'Матеріально'),
+        (u'Часом', u'Часом'),
+        (u'Кодом', u'Кодом'),
+    )
+
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    topic = models.CharField(max_length=100, choices=TOPICCHOICE)
+    location = models.CharField(max_length=100, choices=LOCATIONCHOICE)
+    help_type = models.CharField(max_length=100, choices=TYPECHOICE)
+    subscribers = models.ManyToManyField('SqUser', null=True, blank=True) # related_name='projects')
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.name
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'topic': self.topic,
+            'location': self.location,
+            'help_type': self.help_type
+        }
+
+
 class SqUser(AbstractBaseUser):
     email = models.EmailField(unique=True)
     USERNAME_FIELD = 'email'
@@ -39,10 +82,10 @@ class SqUser(AbstractBaseUser):
     date_of_birth = models.DateField(null=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    projects = models.ManyToManyField('Project', null=True, blank=True, db_table='sqapp_project_subscribers')
 
     REQUIRED_FIELDS = []
 
+    projects = models.ManyToManyField('Project', through=Project.subscribers.through, blank=True, null=True)
     objects = SqUserManager()
 
     def get_full_name(self):
@@ -73,50 +116,7 @@ class SqUser(AbstractBaseUser):
         return self.is_admin
 
 
-class Project(models.Model):
 
-
-
-    TOPICCHOICE = (
-        (u'Допомога престарілим', u'Допомога престарілим'),
-        (u'Допомога тваринам', u'Допомога тваринам'),
-        (u'Тварина програмісту', u'Тварина програмісту'),
-        (u'Престарілим тварину', u'Престарілим тварину'),
-    )
-
-    LOCATIONCHOICE = (
-        (u'Київ', u'Київ'),
-        (u'Вінниця', u'Вінниця'),
-        (u'Львів', u'Львів'),
-    )
-
-    TYPECHOICE = (
-        (u'Матеріально', u'Матеріально'),
-        (u'Часом', u'Часом'),
-        (u'Кодом', u'Кодом'),
-    )
-
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-    topic = models.CharField(max_length=100, choices=TOPICCHOICE)
-    location = models.CharField(max_length=100, choices=LOCATIONCHOICE)
-    help_type = models.CharField(max_length=100, choices=TYPECHOICE)
-    subscribers = models.ManyToManyField('SqUser', null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-    def __repr__(self):
-        return self.name
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'topic': self.topic,
-            'location': self.location,
-            'help_type': self.help_type
-        }
 
 
 class News(models.Model):

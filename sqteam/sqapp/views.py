@@ -112,10 +112,6 @@ def signup_func(request):
                          'errors': signup_form.errors})
 
 
-def app_view(request):
-    return render(request, 'app.html')
-
-
 @login_required
 def subscribe(request):
     project_id = request.POST.get('project_id')
