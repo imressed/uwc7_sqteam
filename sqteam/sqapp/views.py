@@ -45,8 +45,8 @@ class ProjectViewSet(viewsets.ViewSet):
 
     def retrieve(self, request, pk=None):
         queryset = Project.objects.all()
-        user = queryset.get(id=pk)
-        serializer = ProjectSerializer(user, many=False)
+        project = queryset.get(id=pk)
+        serializer = ProjectSerializer(project, many=False)
         return Response(serializer.data)
 
 
@@ -60,8 +60,8 @@ class NewsViewSet(viewsets.ViewSet):
 
     def retrieve(self, request, pk=None):
         queryset = News.objects.all()
-        user = queryset.get(id=pk)
-        serializer = NewsSerializer(user, many=False)
+        news = queryset.get(id=pk)
+        serializer = NewsSerializer(news, many=False)
         return Response(serializer.data)
 
 
