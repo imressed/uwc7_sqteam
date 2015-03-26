@@ -12,7 +12,7 @@
 });
 
 $(document).ready(function (){
-    $("#start_search").click(function (){
+    $("#start-search").click(function (){
         //$(this).animate(function(){
             $('html, body').animate({
                 scrollTop: $("#results").offset().top
@@ -51,11 +51,13 @@ $(document).ready(function (){
                         $("body").find("input[name=email]").val($("#login-form").find("input[name=username]").val());
                         $("body").find("input[name=email]").hide();
                         $("#login-signup").hide();
+
                         $("#login-email").text($("#login-form").find("input[name=username]").val());
-                        $("#login-logout").show();
+                        $("#login-logout").removeClass('display-none');
 
                     } else {
-                        $("#login-errors").empty().show();
+                        $("#login-errors").empty();
+                        $("#login-errors").removeClass('display-none');
                         $.each(msg.errors, function(field, error) {
                             if(field == "__all__") {
                                 $("#login-errors").append(
@@ -92,9 +94,11 @@ $(document).ready(function (){
                     console.log(msg)
                     if(msg.success == true) {
                         $('#modal-register').foundation('reveal', 'close');
-                        $("#signup-success").show();
+                        $("#signup-success").removeClass('display-none');
                     } else {
-                        $("#signup-errors").empty().show();
+                        $("#signup-errors").empty();
+                        $("#signup-errors").removeClass('display-none');
+
                         $.each(msg.errors, function(field, error) {
                             if(field == "__all__") {
                                 $("#signup-errors").append(

@@ -251,6 +251,10 @@
         form.find(".subscribe-button").css("display", "none");
         form.find(".subscribed-button").css("display", "block");
         var csrftoken = $.cookie('csrftoken');
+        if (form.find("input[name='email']").val() === ""){
+            alert("Введіть Ваш email.");
+            return false;
+        }
         $.ajax({
             url: url,
             method: "POST",
