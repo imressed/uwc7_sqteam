@@ -61,12 +61,12 @@ $(document).ready(function (){
                                 $("#login-errors").append(
                                         $("<p class='no-bottom-margin'>" + error + "</p>")
                                 );
-                                $("#login-errors").append("<a href='' class='close'>×</a>")
+                                $("#login-errors").append("<button href='#' tabindex='0' class='close' aria-label='Close Alert'>&times;</button>")
                             } else {
                                 $("#login-errors").append(
                                         $("<p class='no-bottom-margin'>" + field + ": " + error + "</p>")
                                 );
-                                $("#login-errors").append("<a href='' class='close'>×</a>")
+                                $("#login-errors").append("<button href='#' tabindex='0' class='close' aria-label='Close Alert'>&times;</button>")
                             }
                         });
 
@@ -91,18 +91,21 @@ $(document).ready(function (){
                 .done(function(msg) {
                     console.log(msg)
                     if(msg.success == true) {
-                        window.location = msg.next;
+                        $('#modal-register').foundation('reveal', 'close');
+                        $("#signup-success").show();
                     } else {
                         $("#signup-errors").empty().show();
                         $.each(msg.errors, function(field, error) {
                             if(field == "__all__") {
                                 $("#signup-errors").append(
-                                        $("<p>" + error + "</p>")
+                                        $("<p class='no-bottom-margin'>" + error + "</p>")
                                 );
+                                $("#signup-errors").append("<button href='#' tabindex='0' class='close' aria-label='Close Alert'>&times;</button>")
                             } else {
                                 $("#signup-errors").append(
-                                        $("<p>" + field + ": " + error + "</p>")
+                                        $("<p class='no-bottom-margin'>" + field + ": " + error + "</p>")
                                 );
+                                $("#signup-errors").append("<button href='#' tabindex='0' class='close' aria-label='Close Alert'>&times;</button>")
                             }
                         });
 
