@@ -114,7 +114,6 @@ def signup_func(request):
                          'errors': signup_form.errors})
 
 
-@login_required
 def subscribe(request):
     project_id = request.POST.get('project_id')
     user_mail = request.POST.get('email')
@@ -149,7 +148,11 @@ def search(request):
         result['email'] = request.user.email
 
     result['projects'] = [p.serialize() for p in projects]
-    return JsonResponse(result, safe=False)
+    response = JsonResponse(result, safe=False)
+    if request.user.is_authenticated():
+        res_str = '-'.join([str(p.id) for p in projects if request.user in p.subscribers.all()])
+        response.set_cookie('subscribed_projects', res_str)
+    return response
 
 
 #todo: for the sake of simplicity just use finished serializer instead of these two views
