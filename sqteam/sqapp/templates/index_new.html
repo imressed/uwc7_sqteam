@@ -3,9 +3,13 @@
 
 {% block whole_body %}
 <div class="row">
-      <div class="large-offset-3 medium-offset-3 large-2 medium-2 small-5 columns">
+      <div id="login-signup" class="large-offset-3 medium-offset-3 large-2 medium-2 small-5 columns">
         <a href="#" data-reveal-id="modal-login"><img src="{% static 'images/login.png' %}" alt="For login press on Volun Deer" /></a>
         <a class="margin-minus-9 large-font" href="#" data-reveal-id="modal-register">Зареєструйтеся!</a>
+      </div>
+      <div id="login-logout" class="large-offset-3 medium-offset-3 large-2 medium-2 small-5 columns display-none margin-top-30">
+        <h6 id="login-email"></h6>
+        <a class=" large-font" href="/logout">Вийти</a>
       </div>
 
         <div id="modal-register" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
@@ -53,6 +57,9 @@
            <div class="row text-center">
                <h2>Доброго дня!</h2>
            </div>
+             <div class="row">
+                <div class="alert-box alert radius display-none large-10 medium-10 small-12 large-centered medium-centered columns" id="login-errors"></div>
+             </div>
            <form id="login-form" class="uk-form" method="post" action="{% url 'login' %}">
                {% csrf_token %}
                <div class="row">

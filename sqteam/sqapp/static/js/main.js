@@ -47,21 +47,26 @@ $(document).ready(function (){
                 .done(function(msg) {
                     console.log(msg)
                     if(msg.success == true) {
-                        $("#modal-login").attr("aria-hidden","true");
+                        $('#modal-login').foundation('reveal', 'close');
                         $("body").find("input[name=subscribe]").val($("#login-form").find("input[name=username]").val());
                         $("body").find("input[name=subscribe]").hide();
+                        $("#login-signup").hide();
+                        $("#login-email").text($("#login-form").find("input[name=username]").val());
+                        $("#login-logout").show();
 
                     } else {
                         $("#login-errors").empty().show();
                         $.each(msg.errors, function(field, error) {
                             if(field == "__all__") {
                                 $("#login-errors").append(
-                                        $("<p>" + error + "</p>")
+                                        $("<p class='no-bottom-margin'>" + error + "</p>")
                                 );
+                                $("#login-errors").append("<a href='' class='close'>×</a>")
                             } else {
                                 $("#login-errors").append(
-                                        $("<p>" + field + ": " + error + "</p>")
+                                        $("<p class='no-bottom-margin'>" + field + ": " + error + "</p>")
                                 );
+                                $("#login-errors").append("<a href='' class='close'>×</a>")
                             }
                         });
 
