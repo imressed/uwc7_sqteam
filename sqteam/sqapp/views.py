@@ -163,7 +163,7 @@ def get_news(request, project_id):
 
 @receiver(pre_save)
 def deliver_mails(sender, instance, *args, **kwargs):
-    if isinstance(instance, News):
+    if isinstance(instance, News) and instance.project is not None:
         subs = instance.project.subscribers.all()
         mails = [s.email for s in subs]
         subject = u'Новина по проекту "%s"' % instance.project.name
