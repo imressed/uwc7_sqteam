@@ -18,7 +18,8 @@ class SqUserChangeForm(forms.ModelForm):
 
     class Meta:
         model = SqUser
-        fields = ('email', 'password', 'date_of_birth', 'is_active', 'is_admin')
+        fields = ('email', 'password', 'date_of_birth', 'is_active', 'is_admin', 'projects')
+        #fields = '__all__'
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -29,18 +30,19 @@ class SqUserChangeForm(forms.ModelForm):
 
 class SqUserAdmin(UserAdmin):
     # The forms to add and change user instances
-    form = SqUserChangeForm
+    #form = SqUserChangeForm
     add_form = UserCreationForm
 
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'date_of_birth', 'is_admin')
-    list_filter = ('is_admin',)
+    list_display = ('email', 'is_admin')
+    #list_filter = ('is_admin',)
+    list_filter = ()
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('date_of_birth',)}),
-        ('Permissions', {'fields': ('is_admin',)}),
+        (u'Акаунт', {'fields': ('email', 'password')}),
+        (u'Персональна інформація', {'fields': ('date_of_birth', 'projects')}),
+        (u'Дозволи', {'fields': ('is_admin',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
