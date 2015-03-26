@@ -285,6 +285,8 @@
                 var template = Handlebars.compile(source);
                 var resHtml = template({projects: data});
                 prResults.html(resHtml);
+                $("body").find("input[name=email]").val($("#login-form").find("input[name=username]").val());
+                $("body").find("input[name=email]").hide();
                 $(document).foundation();
             });
         })

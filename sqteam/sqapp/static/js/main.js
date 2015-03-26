@@ -48,8 +48,8 @@ $(document).ready(function (){
                     console.log(msg)
                     if(msg.success == true) {
                         $('#modal-login').foundation('reveal', 'close');
-                        $("body").find("input[name=subscribe]").val($("#login-form").find("input[name=username]").val());
-                        $("body").find("input[name=subscribe]").hide();
+                        $("body").find("input[name=email]").val($("#login-form").find("input[name=username]").val());
+                        $("body").find("input[name=email]").hide();
                         $("#login-signup").hide();
                         $("#login-email").text($("#login-form").find("input[name=username]").val());
                         $("#login-logout").show();
