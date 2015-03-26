@@ -1,3 +1,5 @@
+from django.core.mail import send_mail
+from django.conf import settings
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager)
@@ -14,6 +16,9 @@ class SqUserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
         )
+        subject = u'Вітаємо з реєстрацією в системі'
+        message = u'Дані для входу. E-mail: %s. Пароль: %s' % (email, password)
+        send_mail(subject, message, settings.EMAIL_HOST_USER, [email])
 
         user.set_password(password)
         user.save(using=self._db)
