@@ -3,14 +3,18 @@
 
 {% block whole_body %}
 <div class="row">
+
+        {% if user.is_authenticated %}
+            <div id="login-logout" class="large-offset-3 medium-offset-3 large-2 medium-2 small-5 columns text-center margin-top-40">
+                <h6 id="login-email">{{ user.email }}</h6>
+                <a class=" large-font" href="/logout">Вийти</a>
+            </div>
+        {% else %}
       <div id="login-signup" class="large-offset-3 medium-offset-3 large-2 medium-2 small-5 columns">
         <a href="#" data-reveal-id="modal-login"><img src="{% static 'images/login.png' %}" alt="For login press on Volun Deer" /></a>
         <a class="margin-minus-9 large-font" href="#" data-reveal-id="modal-register">Зареєструйтеся!</a>
       </div>
-      <div id="login-logout" class="large-offset-3 medium-offset-3 large-2 medium-2 small-5 columns text-center display-none margin-top-40">
-        <h6 id="login-email"></h6>
-        <a class=" large-font" href="/logout">Вийти</a>
-      </div>
+        {% endif %}
 
         <div id="modal-register" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
            <div class="row text-center">
@@ -243,6 +247,9 @@
     $(document).on("click", ".subscribe-button", function() {
         var form = $(this).closest("form");
         var url = form.attr("action");
+        form.find("input[name='email']").css("display", "none");
+        form.find(".subscribe-button").css("display", "none");
+        form.find(".subscribed-button").css("display", "block");
         var csrftoken = $.cookie('csrftoken');
         $.ajax({
             url: url,
@@ -251,10 +258,8 @@
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('X-CSRFToken', csrftoken);
             },
-            success: function() {
-                form.find("input[name='email']").css("display", "none");
-                form.find(".subscribe-button").css("display", "none");
-                form.find(".subscribed-button").css("display", "block")
+            success: function(data) {
+                console.log(data);
             }
         });
     });
@@ -283,10 +288,14 @@
             }, function(data) {
                 var source = $("#results-template").html();
                 var template = Handlebars.compile(source);
-                var resHtml = template({projects: data});
+                var resHtml = template({projects: data.projects});
                 prResults.html(resHtml);
-                $("body").find("input[name=email]").val($("#login-form").find("input[name=username]").val());
-                $("body").find("input[name=email]").hide();
+                if(data.loggedin) {
+                    console.log(data.email);
+                    $("body").find("input[name=email]").val(data.email);
+                    $("body").find("input[name=email]").hide();
+                }
+
                 $(document).foundation();
             });
         })

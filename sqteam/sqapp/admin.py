@@ -30,7 +30,7 @@ class SqUserChangeForm(forms.ModelForm):
 
 class SqUserAdmin(UserAdmin):
     # The forms to add and change user instances
-    #form = SqUserChangeForm
+    form = SqUserChangeForm
     add_form = UserCreationForm
 
     # The fields to be used in displaying the User model.

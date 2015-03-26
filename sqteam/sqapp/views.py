@@ -1,7 +1,8 @@
-import json
+import logging
 
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
+from django.core.mail import send_mail
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.shortcuts import HttpResponse, RequestContext
 from django.contrib.auth import authenticate, login, logout
@@ -19,6 +20,7 @@ from .serializers import ProjectSerializer, NewsSerializer, SqUserSerializer
 
 from django.contrib import messages
 
+logger = logging.getLogger(__name__)
 
 class SqUserViewSet(viewsets.ViewSet):
     model = SqUser
@@ -124,9 +126,11 @@ def subscribe(request):
                                           password=SqUser.objects.make_random_password(length=8))
     pr = get_object_or_404(Project, pk=int(project_id))
     pr.subscribers.add(user)
+    message = u'User {0} has been subscribed to the {1}'.format(user.email, pr.name)
+    logger.info(message)
     return JsonResponse({
         'success': True,
-        'message': u'User {0} has been subscribed to the {1}'.format(user.email, pr.name)
+        'message': message
     })
 
 def search(request):
@@ -137,14 +141,20 @@ def search(request):
         params = {sf: value}
         if value:
             projects = projects.filter(**params)
+    result = {
+        'loggedin': False
+    }
+    if request.user.is_authenticated():
+        result['loggedin'] = True
+        result['email'] = request.user.email
 
-    return JsonResponse([p.serialize() for p in projects], safe=False)
+    result['projects'] = [p.serialize() for p in projects]
+    return JsonResponse(result, safe=False)
+
 
 #todo: for the sake of simplicity just use finished serializer instead of these two views
 def get_news(request, project_id):
-
     news = News.objects.filter(project=project_id)
-
     return JsonResponse([n.serialize() for n in news], safe=False)
 
 
@@ -152,7 +162,11 @@ def get_news(request, project_id):
 def deliver_mails(sender, instance, *args, **kwargs):
     if isinstance(instance, News):
         subs = instance.project.subscribers.all()
-        for s in subs:
-            print(s.email)
+        mails = [s.email for s in subs]
+        subject = u'Новина по проекту "%s"' % instance.project.name
+        message = u'%s була додана чудова новина. %s' % (instance.date.strftime('%H:%M %d/%b/%y'), instance.text)
+        send_mail(subject, message, 'volun.deer@yandex.ua', mails)
+
+
 
 

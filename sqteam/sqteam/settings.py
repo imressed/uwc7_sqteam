@@ -137,3 +137,40 @@ SUIT_CONFIG = {
     # misc
     # 'LIST_PER_PAGE': 15
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s | %(asctime)s | %(message)s',
+            'datefmt': '%H:%M:%S %d-%m-%y'
+        },
+    },
+
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+    },
+
+    'loggers': {
+        'sqapp': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+
+EMAIL_HOST = 'smtp.yandex.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'volun.deer@yandex.ua'
+EMAIL_HOST_PASSWORD = 'try-to-forget'  # do not try to steal our account, please
+EMAIL_USE_SSL = True
